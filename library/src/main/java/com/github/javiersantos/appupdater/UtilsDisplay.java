@@ -21,12 +21,12 @@ import java.net.URL;
 
 class UtilsDisplay {
 
-    static Dialog showUpdateAvailableDialog(final Context context, String content, final UpdateFrom updateFrom, final URL updateUrl, int layoutId, int updateButtonId, int closeButtonId) {
+    static Dialog showUpdateAvailableDialog(final Context context, String content, final UpdateFrom updateFrom, final URL updateUrl, int layoutId, int messageTextViewId, int updateButtonId, int closeButtonId) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(layoutId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
-        TextView dialogMessage = dialog.findViewById(layoutId);
+        TextView dialogMessage = dialog.findViewById(messageTextViewId);
         dialogMessage.setText(content);
 
         dialog.findViewById(updateButtonId).setOnClickListener(new View.OnClickListener() {

@@ -370,7 +370,7 @@ public class AppUpdater implements IAppUpdater {
                         switch (display) {
                             case DIALOG:
                                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, updateButtonId, closeButtonId);
+                                dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, messageTextViewId, updateButtonId, closeButtonId);
                                 dialog.setTitle(titleUpdate);
                                 dialog.setCancelable(isDialogCancelable);
                                 dialog.show();

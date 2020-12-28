@@ -1,6 +1,7 @@
 package com.github.javiersantos.appupdater;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.Display;
@@ -18,6 +20,8 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.interfaces.IAppUpdater;
 import com.github.javiersantos.appupdater.objects.GitHub;
 import com.github.javiersantos.appupdater.objects.Update;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class AppUpdater implements IAppUpdater {
     private Context context;
@@ -36,8 +40,25 @@ public class AppUpdater implements IAppUpdater {
     private DialogInterface.OnClickListener btnUpdateClickListener, btnDismissClickListener, btnDisableClickListener;
 
     private AlertDialog alertDialog;
+    private Dialog dialog;
     private Snackbar snackbar;
     private Boolean isDialogCancelable;
+
+    private int layoutId;
+    private int updateButtonId;
+    private int closeButtonId;
+
+    public void setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
+    }
+
+    public void setUpdateButtonId(int updateButtonId) {
+        this.updateButtonId = updateButtonId;
+    }
+
+    public void setCloseButtonId(int closeButtonId) {
+        this.closeButtonId = closeButtonId;
+    }
 
     public AppUpdater(Context context) {
         this.context = context;
@@ -340,12 +361,17 @@ public class AppUpdater implements IAppUpdater {
                     if (UtilsLibrary.isAbleToShow(successfulChecks, showEvery)) {
                         switch (display) {
                             case DIALOG:
-                                final DialogInterface.OnClickListener updateClickListener = btnUpdateClickListener == null ? new UpdateClickListener(context, updateFrom, update.getUrlToDownload()) : btnUpdateClickListener;
-                                final DialogInterface.OnClickListener disableClickListener = btnDisableClickListener == null ? new DisableClickListener(context) : btnDisableClickListener;
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(dialog.getWindow().getAttributes());
+                                lp.width = WRAP_CONTENT;
+                                lp.height = WRAP_CONTENT;
 
-                                alertDialog = UtilsDisplay.showUpdateAvailableDialog(context, titleUpdate, getDescriptionUpdate(context, update, Display.DIALOG), btnDismiss, btnUpdate, btnDisable, updateClickListener, btnDismissClickListener, disableClickListener);
-                                alertDialog.setCancelable(isDialogCancelable);
-                                alertDialog.show();
+                                dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, updateButtonId, closeButtonId);
+                                dialog.setTitle(titleUpdate);
+                                dialog.setCancelable(isDialogCancelable);
+                                dialog.show();
+                                dialog.getWindow().setAttributes(lp);
+
                                 break;
                             case SNACKBAR:
                                 snackbar = UtilsDisplay.showUpdateAvailableSnackbar(context, getDescriptionUpdate(context, update, Display.SNACKBAR), UtilsLibrary.getDurationEnumToBoolean(duration), updateFrom, update.getUrlToDownload());

@@ -1,16 +1,19 @@
 package com.github.javiersantos.appupdater;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
@@ -18,13 +21,28 @@ import java.net.URL;
 
 class UtilsDisplay {
 
-    static AlertDialog showUpdateAvailableDialog(final Context context, String title, String content, String btnNegative, String btnPositive, String btnNeutral, final DialogInterface.OnClickListener updateClickListener, final DialogInterface.OnClickListener dismissClickListener, final DialogInterface.OnClickListener disableClickListener) {
-        return new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(content)
-                .setPositiveButton(btnPositive, updateClickListener)
-                .setNegativeButton(btnNegative, dismissClickListener)
-                .setNeutralButton(btnNeutral, disableClickListener).create();
+    static Dialog showUpdateAvailableDialog(final Context context, String content, final UpdateFrom updateFrom, final URL updateUrl, int layoutId, int updateButtonId, int closeButtonId) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(layoutId);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        TextView dialogMessage = dialog.findViewById(layoutId);
+        dialogMessage.setText(content);
+
+        dialog.findViewById(updateButtonId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UtilsLibrary.goToUpdate(context, updateFrom, updateUrl);
+            }
+        });
+
+        dialog.findViewById(closeButtonId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        return dialog;
     }
 
     static AlertDialog showUpdateNotAvailableDialog(final Context context, String title, String content) {
@@ -33,7 +51,8 @@ class UtilsDisplay {
                 .setMessage(content)
                 .setPositiveButton(context.getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {}
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
                 })
                 .create();
     }
@@ -119,5 +138,4 @@ class UtilsDisplay {
             notificationManager.createNotificationChannel(mChannel);
         }
     }
-
 }

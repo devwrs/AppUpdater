@@ -64,8 +64,9 @@ public class AppUpdater implements IAppUpdater {
         return this;
     }
 
-    public void setMessageTextViewId(int messageTextViewId) {
+    public AppUpdater setMessageTextViewId(int messageTextViewId) {
         this.messageTextViewId = messageTextViewId;
+        return this;
     }
 
     public AppUpdater(Context context) {

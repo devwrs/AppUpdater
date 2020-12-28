@@ -29,7 +29,7 @@ class UtilsDisplay {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
         TextView titleMessage = dialog.findViewById(titleId);
-        titleMessage.setText(content);
+        titleMessage.setText(titleUpdate);
         TextView dialogMessage = dialog.findViewById(messageTextViewId);
         dialogMessage.setText(content);
 

@@ -47,6 +47,7 @@ public class AppUpdater implements IAppUpdater {
     private int layoutId;
     private int updateButtonId;
     private int closeButtonId;
+    private int messageTextViewId;
 
     public AppUpdater setLayoutId(int layoutId) {
         this.layoutId = layoutId;
@@ -61,6 +62,10 @@ public class AppUpdater implements IAppUpdater {
     public AppUpdater setCloseButtonId(int closeButtonId) {
         this.closeButtonId = closeButtonId;
         return this;
+    }
+
+    public void setMessageTextViewId(int messageTextViewId) {
+        this.messageTextViewId = messageTextViewId;
     }
 
     public AppUpdater(Context context) {

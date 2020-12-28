@@ -48,16 +48,19 @@ public class AppUpdater implements IAppUpdater {
     private int updateButtonId;
     private int closeButtonId;
 
-    public void setLayoutId(int layoutId) {
+    public AppUpdater setLayoutId(int layoutId) {
         this.layoutId = layoutId;
+        return this;
     }
 
-    public void setUpdateButtonId(int updateButtonId) {
+    public AppUpdater setUpdateButtonId(int updateButtonId) {
         this.updateButtonId = updateButtonId;
+        return this;
     }
 
-    public void setCloseButtonId(int closeButtonId) {
+    public AppUpdater setCloseButtonId(int closeButtonId) {
         this.closeButtonId = closeButtonId;
+        return this;
     }
 
     public AppUpdater(Context context) {

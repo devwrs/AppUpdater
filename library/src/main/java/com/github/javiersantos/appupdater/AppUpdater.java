@@ -365,16 +365,14 @@ public class AppUpdater implements IAppUpdater {
                         switch (display) {
                             case DIALOG:
                                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                lp.copyFrom(dialog.getWindow().getAttributes());
-                                lp.width = WRAP_CONTENT;
-                                lp.height = WRAP_CONTENT;
-
                                 dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, updateButtonId, closeButtonId);
                                 dialog.setTitle(titleUpdate);
                                 dialog.setCancelable(isDialogCancelable);
                                 dialog.show();
+                                lp.copyFrom(dialog.getWindow().getAttributes());
+                                lp.width = WRAP_CONTENT;
+                                lp.height = WRAP_CONTENT;
                                 dialog.getWindow().setAttributes(lp);
-
                                 break;
                             case SNACKBAR:
                                 snackbar = UtilsDisplay.showUpdateAvailableSnackbar(context, getDescriptionUpdate(context, update, Display.SNACKBAR), UtilsLibrary.getDurationEnumToBoolean(duration), updateFrom, update.getUrlToDownload());

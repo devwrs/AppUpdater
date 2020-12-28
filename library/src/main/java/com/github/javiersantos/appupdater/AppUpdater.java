@@ -48,6 +48,7 @@ public class AppUpdater implements IAppUpdater {
     private int updateButtonId;
     private int closeButtonId;
     private int messageTextViewId;
+    private int titleId;
 
     public AppUpdater setLayoutId(int layoutId) {
         this.layoutId = layoutId;
@@ -66,6 +67,11 @@ public class AppUpdater implements IAppUpdater {
 
     public AppUpdater setMessageTextViewId(int messageTextViewId) {
         this.messageTextViewId = messageTextViewId;
+        return this;
+    }
+
+    public AppUpdater setTitleId(int titleId) {
+        this.titleId = titleId;
         return this;
     }
 
@@ -371,8 +377,7 @@ public class AppUpdater implements IAppUpdater {
                         switch (display) {
                             case DIALOG:
                                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, messageTextViewId, updateButtonId, closeButtonId);
-                                dialog.setTitle(titleUpdate);
+                                dialog = UtilsDisplay.showUpdateAvailableDialog(context, getDescriptionUpdate(context, update, Display.DIALOG), updateFrom, update.getUrlToDownload(), layoutId, titleId, titleUpdate, messageTextViewId, updateButtonId, closeButtonId);
                                 dialog.setCancelable(isDialogCancelable);
                                 dialog.show();
                                 lp.copyFrom(dialog.getWindow().getAttributes());

@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
@@ -21,11 +22,14 @@ import java.net.URL;
 
 class UtilsDisplay {
 
-    static Dialog showUpdateAvailableDialog(final Context context, String content, final UpdateFrom updateFrom, final URL updateUrl, int layoutId, int messageTextViewId, int updateButtonId, int closeButtonId) {
+    static Dialog showUpdateAvailableDialog(final Context context, String content, final UpdateFrom updateFrom, final URL updateUrl, int layoutId, int titleId, String titleUpdate, int messageTextViewId, int updateButtonId, int closeButtonId) {
         final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(layoutId);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
+        TextView titleMessage = dialog.findViewById(titleId);
+        titleMessage.setText(content);
         TextView dialogMessage = dialog.findViewById(messageTextViewId);
         dialogMessage.setText(content);
 
